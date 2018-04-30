@@ -146,9 +146,10 @@ export default class VideoPlayer extends Component {
 
 	onStartPress() {
 		if (this.props.onStart) {
-			this.props.onStart();
-			if (this.startFullScreen) {
-        this.onToggleFullScreen();
+      this.props.onStart();
+      console.log("this.onStartPress called w/ prop startFullScreen: ", this.state.startFullScreen);
+			if (this.state.startFullScreen) {
+        this.onToggleFullScreen();  
 			}
 		}
 
