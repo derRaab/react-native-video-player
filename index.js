@@ -127,6 +127,10 @@ export default class VideoPlayer extends Component {
 	componentDidMount() {
 		if (this.props.autoplay) {
 			this.hideControls();
+			// start in FullScreen mode
+			if (this.props.startFullScreen && this.player) {
+				this.player.presentFullscreenPlayer();
+			}
 		}
 	}
 
@@ -146,11 +150,7 @@ export default class VideoPlayer extends Component {
 
 	onStartPress() {
 		if (this.props.onStart) {
-      this.props.onStart();
-      console.log("this.onStartPress called w/ prop startFullScreen: ", this.state.startFullScreen);
-			if (this.state.startFullScreen) {
-        this.onToggleFullScreen();  
-			}
+			this.props.onStart();
 		}
 
 		this.setState(state => ({
@@ -221,6 +221,7 @@ export default class VideoPlayer extends Component {
 	}
 
 	onToggleFullScreen() {
+		console.log("onToggleFullScreen Called");
 		this.player.presentFullscreenPlayer();
 	}
 
@@ -456,6 +457,8 @@ export default class VideoPlayer extends Component {
 					onProgress={this.onProgress}
 					onEnd={this.onEnd}
 					onLoad={this.onLoad}
+					onFullscreenPlayerWillDismiss={this.props.onFullscreenPlayerWillDismiss}
+					onFullscreenPlayerDidDismiss={this.props.onFullScreenPlayerDidDismiss}
 					source={video}
 					resizeMode={resizeMode}
 				/>
@@ -561,5 +564,6 @@ VideoPlayer.defaultProps = {
 	disableSeek: false,
 	pauseOnPress: false,
 	fullScreenOnLongPress: false,
-	customStyles: {}
+	customStyles: {},
+	startFullScreen: false
 };
