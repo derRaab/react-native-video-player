@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Image, ImageBackground, Platform, StyleSheet, TouchableOpacity, View, ViewPropTypes } from 'react-native';
+import { Image, ImageBackground, Platform, StyleSheet, TouchableOpacity, View, ViewPropTypes} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Video from 'react-native-video'; // eslint-disable-line
 
 const BackgroundImage = ImageBackground || Image; // fall back to Image if RN < 0.46
+
+let ViewPropTypesVar
+
+if (ViewPropTypes) {
+  ViewPropTypesVar = ViewPropTypes
+} else {
+  ViewPropTypesVar = View.propTypes
+}
 
 const styles = StyleSheet.create({
 	preloadingPlaceholder: {
