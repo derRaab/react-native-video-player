@@ -130,6 +130,8 @@ export default class VideoPlayer extends Component {
 		this.onSeekGrant = this.onSeekGrant.bind(this);
 		this.onSeekRelease = this.onSeekRelease.bind(this);
 		this.onSeek = this.onSeek.bind(this);
+
+		this.autoPresentFullscreenPlayerOnLoad = false;
 	}
 
 	componentDidMount() {
@@ -137,7 +139,7 @@ export default class VideoPlayer extends Component {
 			this.hideControls();
 			// start in FullScreen mode
 			if (this.props.startFullScreen && this.player) {
-				this.player.presentFullscreenPlayer();
+				this.autoPresentFullscreenPlayerOnLoad = true;
 			}
 		}
 	}
@@ -200,7 +202,7 @@ export default class VideoPlayer extends Component {
 			this.player.seek(0);
 		}
 	}
-
+	
 	onLoad(event) {
 		if (this.props.onLoad) {
 			this.props.onLoad(event);
@@ -208,6 +210,12 @@ export default class VideoPlayer extends Component {
 
 		const { duration } = event;
 		this.setState({ duration });
+
+		if ( this.autoPresentFullscreenPlayerOnLoad ) {
+
+			this.autoPresentFullscreenPlayerOnLoad = false;
+			this.player.presentFullscreenPlayer();
+		}
 	}
 
 	onPlayPress() {
